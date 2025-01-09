@@ -9,10 +9,6 @@ jobs:
     name: digest
     runs-on: ubuntu-latest
     
-    # Add the permissions block here:
-    permissions:
-      contents: write
-    
     steps:
       - name: checkout
         uses: actions/checkout@master
