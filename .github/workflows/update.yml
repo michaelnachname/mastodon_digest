@@ -1,8 +1,5 @@
 name: My Mastodon Digest 
-on:
-  schedule:
-    - cron: '0 10,22 * * *'
-  workflow_dispatch:
+on: push
 
 jobs:
   update:
