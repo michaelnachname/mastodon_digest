@@ -3,23 +3,32 @@ on:
   schedule:
     - cron: '0 10,22 * * *'
   workflow_dispatch:
+
 jobs:
   update:
     name: digest
     runs-on: ubuntu-latest
+    
+    # Add the permissions block here:
+    permissions:
+      contents: write
+    
     steps:
       - name: checkout
         uses: actions/checkout@master
         with:
           ref: main
+
       - name: python setup
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
+
       - name: python things
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       - name: run digest
         env:
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
@@ -27,6 +36,7 @@ jobs:
           MASTODON_USERNAME: ${{ secrets.MASTODON_USERNAME }}
         run: |
           python run.py -n 12 -s SimpleWeighted -t lax
+
       - name: publish
         uses: crazy-max/ghaction-github-pages@v3
         with:
